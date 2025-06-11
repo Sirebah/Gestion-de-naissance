@@ -11,9 +11,6 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 	exclude = {
 		// exclusion des dépendances de sécuririté et de de la base de donnée
 		SecurityAutoConfiguration.class,
-		DataSourceAutoConfiguration.class,
-		HibernateJpaAutoConfiguration.class,
-		DataSourceTransactionManagerAutoConfiguration.class
 	}
 
 )
