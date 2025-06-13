@@ -29,6 +29,4 @@ public class Profile {
     @Column(length = 150)
     String Password;
 
-
-
 }
