@@ -14,18 +14,8 @@
 	<name>basic-crud</name>
 	<description>Demo project with CRUD for Spring Boot</description>
 	<url/>
-	<licenses>
-		<license/>
-	</licenses>
-	<developers>
-		<developer/>
-	</developers>
-	<scm>
-		<connection/>
-		<developerConnection/>
-		<tag/>
-		<url/>
-	</scm>
+
+
 	<properties>
 		<java.version>21</java.version>
 	</properties>
