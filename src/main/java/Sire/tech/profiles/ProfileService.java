@@ -3,6 +3,7 @@ package Sire.tech.profiles;
 import java.util.List;
 import java.util.Optional;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +29,7 @@ public class ProfileService {
 
     public Profile findProfileById(int id){
         Optional<Profile> profile = profileRepository.findById(id);
-        return profile.orElse(null);
+        return profile.orElseThrow(() -> new EntityNotFoundException("le profile n'existe pas avec l'id: "+ id) );
     }
 
     public Profile updateProfile(int id,Profile profile){
