@@ -5,6 +5,7 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -62,5 +63,14 @@ public class ApplicationControllerAdvice {
           BAD_REQUEST.value(),
           null,
           "Le mail fournis existe déjà ");
+   }
+
+   @ResponseStatus(BAD_REQUEST)
+   @ExceptionHandler(InvalidFormatException.class)
+   @ResponseBody
+   public ErrorEntity handleInvalidException(InvalidFormatException e){
+      log.error("Error: {}", e.getMessage(), e);
+      e.printStackTrace();
+      return new ErrorEntity(LocalDateTime.now(), BAD_REQUEST.value(), null, e.getMessage());
    }
 }
