@@ -1,11 +1,13 @@
 package Sire.tech.shared.exceptions;
 
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 import java.time.LocalDateTime;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -39,5 +41,26 @@ public class ApplicationControllerAdvice {
            NOT_FOUND.value(),
            null,
            "l'argument est invalide veuillez vérifier l'id il doit-être un entier");
+   }
+   @ResponseStatus(BAD_REQUEST)
+   @ResponseBody
+   @ExceptionHandler(RuntimeException.class)
+   public ErrorEntity handleRuntimeException(RuntimeException e){
+      log.error("erreur: {}", e.getMessage(), e);
+      e.printStackTrace();
+       log.error("erreur: {}", e.getMessage());
+       return new ErrorEntity(LocalDateTime.now(), BAD_REQUEST.value(), null, e.getMessage());
+
+   }
+   @ResponseStatus(BAD_REQUEST)
+   @ResponseBody
+   @ExceptionHandler(DataIntegrityViolationException.class)
+   public ErrorEntity databaseIntegrityViolationExceptionHandler(DataIntegrityViolationException ex){
+      log.error("erreur : {}", ex.getMessage(), ex.getCause());
+      ex.printStackTrace();
+      return new ErrorEntity(LocalDateTime.now(),
+          BAD_REQUEST.value(),
+          null,
+          "Le mail fournis existe déjà ");
    }
 }

@@ -24,8 +24,9 @@ public class Profile {
     int id ;
     String FirstName;
     String LastName;
-    @Column(length = 100)
+    @Column(length = 100, unique = true)
     String Email;
+    String phone;
     @Column(length = 150)
     String Password;
 

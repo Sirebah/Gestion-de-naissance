@@ -3,6 +3,7 @@ package Sire.tech.profiles;
 import java.util.List;
 import java.util.Optional;
 
+import Sire.tech.shared.services.ValidationsService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -17,9 +18,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Service
 public class ProfileService {
     private final ProfileRepository profileRepository;
+    private final ValidationsService validationsService;
 
-    public void create(Profile profile) {
-        profileRepository.save(profile);
+    public Profile create(Profile profile) {
+        this.validationsService.validateEmail(profile.getEmail());
+        this.validationsService.validatePassword(profile.getPassword());
+        this.validationsService.validatePhone(profile.getPhone());
+
+        return profileRepository.save(profile);
     }
 
 
@@ -33,7 +39,12 @@ public class ProfileService {
     }
 
     public Profile updateProfile(int id,Profile profile){
+
+
         Profile profileToUpdate = findProfileById(id);
+        this.validationsService.validateEmail(profile.getEmail());
+        this.validationsService.validatePassword(profile.getPassword());
+        this.validationsService.validatePhone(profile.getPhone());
 
         profileToUpdate.setFirstName(profile.getFirstName());
         profileToUpdate.setLastName(profile.getLastName());
