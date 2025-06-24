@@ -50,7 +50,6 @@ public class ProfileController {
     @DeleteMapping("{id}")
     public void delete(@PathVariable int id){
         this.profileService.deleteProfile(id);
-
     }
 
 

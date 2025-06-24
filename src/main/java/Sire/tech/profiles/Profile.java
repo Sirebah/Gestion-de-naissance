@@ -2,6 +2,8 @@ package Sire.tech.profiles;
 
 import java.awt.PageAttributes;
 
+import Sire.tech.shared.entities.Adresse;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -9,6 +11,8 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,6 +36,10 @@ public class Profile {
 
     @Column(length = 100, unique = true)
     private String Email;
+
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.DETACH})
+    @JoinColumn(name = "adresse_id")
+    private Adresse adresse;
 
     private String phone;
 

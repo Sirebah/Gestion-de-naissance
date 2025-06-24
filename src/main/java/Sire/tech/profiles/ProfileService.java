@@ -3,6 +3,9 @@ package Sire.tech.profiles;
 import java.util.List;
 import java.util.Optional;
 
+import Sire.tech.shared.entities.Adresse;
+import Sire.tech.shared.repositories.AdressRepository;
+import Sire.tech.shared.services.AdresseService;
 import Sire.tech.shared.services.ValidationsService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
@@ -19,11 +22,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class ProfileService {
     private final ProfileRepository profileRepository;
     private final ValidationsService validationsService;
+    private final AdresseService adresseService;
 
     public Profile create(Profile profile) {
         this.validationsService.validateEmail(profile.getEmail());
         this.validationsService.validatePassword(profile.getPassword());
         this.validationsService.validatePhone(profile.getPhone());
+
+        if(profile.getAdresse() != null) {
+            Adresse adresse1 = this.adresseService.createAdresse(profile.getAdresse());
+            profile.setAdresse(adresse1);
+        }
 
         return profileRepository.save(profile);
     }
