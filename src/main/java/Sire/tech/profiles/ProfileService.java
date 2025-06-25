@@ -3,8 +3,14 @@ package Sire.tech.profiles;
 import java.util.List;
 import java.util.Optional;
 
+import Sire.tech.shared.entities.Adresse;
+import Sire.tech.shared.repositories.AdressRepository;
+import Sire.tech.shared.services.AdresseService;
+import Sire.tech.shared.services.ValidationsService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,9 +21,20 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Service
 public class ProfileService {
     private final ProfileRepository profileRepository;
+    private final ValidationsService validationsService;
+    private final AdresseService adresseService;
 
-    public void create(Profile profile) {
-        profileRepository.save(profile);
+    public Profile create(Profile profile) {
+        this.validationsService.validateEmail(profile.getEmail());
+        this.validationsService.validatePassword(profile.getPassword());
+        this.validationsService.validatePhone(profile.getPhone());
+
+        if(profile.getAdresse() != null) {
+            Adresse adresse1 = this.adresseService.createAdresse(profile.getAdresse());
+            profile.setAdresse(adresse1);
+        }
+
+        return profileRepository.save(profile);
     }
 
 
@@ -27,11 +44,16 @@ public class ProfileService {
 
     public Profile findProfileById(int id){
         Optional<Profile> profile = profileRepository.findById(id);
-        return profile.orElse(null);
+        return profile.orElseThrow(() -> new EntityNotFoundException("le profile n'existe pas avec l'id: "+ id) );
     }
 
     public Profile updateProfile(int id,Profile profile){
+
+
         Profile profileToUpdate = findProfileById(id);
+        this.validationsService.validateEmail(profile.getEmail());
+        this.validationsService.validatePassword(profile.getPassword());
+        this.validationsService.validatePhone(profile.getPhone());
 
         profileToUpdate.setFirstName(profile.getFirstName());
         profileToUpdate.setLastName(profile.getLastName());

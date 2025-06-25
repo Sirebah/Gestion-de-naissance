@@ -26,8 +26,8 @@ public class ProfileController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void create(@RequestBody Profile profile){
-        this.profileService.create(profile);
+    public Profile create(@RequestBody Profile profile){
+        return this.profileService.create(profile);
     }
 
 
@@ -50,7 +50,6 @@ public class ProfileController {
     @DeleteMapping("{id}")
     public void delete(@PathVariable int id){
         this.profileService.deleteProfile(id);
-
     }
 
 
