@@ -21,5 +21,17 @@ public class ProfileMapper {
         return profile;
     }
 
+    public ProfileDTO entityToDto(Profile profile) {
+        return new ProfileDTO(
+            profile.getFirstName(),
+            profile.getLastName(),
+            profile.getCivility(),
+            profile.getEmail(),
+            profile.getPhone(),
+            null
+
+        );
+    }
+
 
 }
