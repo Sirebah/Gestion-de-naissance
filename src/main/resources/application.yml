@@ -1,3 +1,10 @@
 spring:
+  jackson:
+    default-property-inclusion: non_null
   application:
     name: basic-crud
+
+#prefixe les notre url
+server:
+  servlet:
+    context-path: /api

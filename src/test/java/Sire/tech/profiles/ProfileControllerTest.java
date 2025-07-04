@@ -10,6 +10,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.List;
+import java.util.Set;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.AfterEach;
@@ -38,19 +39,9 @@ class ProfileControllerTest {
 
     @BeforeEach
     void setUP() {
-        Profile profile1 = Profile.builder()
-            .lastName("Sire")
-            .firstName("Bah")
-            .email("bahsire1@gmail.com")
-            .build();
-
-        Profile profile2 = Profile.builder()
-            .lastName("Moussa")
-            .firstName("Diallo")
-            .email("diallo@mail.test")
-            .build();
-
-        when(profileService.findProfiles()).thenReturn(List.of(profile1, profile2));
+        ProfileDTO profile1 = new ProfileDTO(null, null,null,"bahsire1@gmail.com", null, null);
+        ProfileDTO profile2 = new ProfileDTO(null, null,null,"moussa@gmail.com", null, null);
+        when(profileService.findProfiles()).thenReturn(Set.of(profile1, profile2));
 
 
 

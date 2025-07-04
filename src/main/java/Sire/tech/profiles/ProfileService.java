@@ -2,20 +2,15 @@ package Sire.tech.profiles;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import Sire.tech.shared.entities.Adresse;
-import Sire.tech.shared.repositories.AdressRepository;
 import Sire.tech.shared.services.AdresseService;
 import Sire.tech.shared.services.ValidationsService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 @AllArgsConstructor
 @Service
@@ -23,6 +18,7 @@ public class ProfileService {
     private final ProfileRepository profileRepository;
     private final ValidationsService validationsService;
     private final AdresseService adresseService;
+    private final ProfileMapper profileMapper;
 
     public Profile create(Profile profile) {
         this.validationsService.validateEmail(profile.getEmail());
@@ -38,8 +34,11 @@ public class ProfileService {
     }
 
 
-    public List<Profile> findProfiles(){
-        return profileRepository.findAll();
+    public Set<ProfileDTO> findProfiles(){
+        List<Profile> profiles = profileRepository.findAll();
+
+        return profiles.stream().map(this.profileMapper::entityToDto).collect(Collectors.toSet());
+
     }
 
     public Profile findProfileById(int id){
