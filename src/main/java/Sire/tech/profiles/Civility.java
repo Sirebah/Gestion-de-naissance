@@ -4,5 +4,4 @@ public enum Civility {
     MR,
     MME,
     MLLE
-
 }
