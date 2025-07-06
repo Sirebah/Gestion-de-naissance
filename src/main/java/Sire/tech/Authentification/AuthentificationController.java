@@ -1,5 +1,7 @@
 package Sire.tech.Authentification;
 
+import java.util.Map;
+
 import Sire.tech.profiles.Profile;
 import Sire.tech.profiles.ProfileDTO;
 import lombok.AllArgsConstructor;
@@ -22,5 +24,15 @@ public class AuthentificationController {
     @PostMapping(path = "sign-up")
     public Profile create(@RequestBody ProfileDTO profileDTO){
             return this.authentificationService.create(profileDTO);
+    }
+
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    @PostMapping("activate")
+    public void activate(@RequestBody Map<String, String> parameters){
+
+         this.authentificationService.validate(parameters);
+
+
+
     }
 }

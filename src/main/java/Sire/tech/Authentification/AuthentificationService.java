@@ -1,5 +1,7 @@
 package Sire.tech.Authentification;
 
+import java.util.Map;
+
 import Sire.tech.profiles.Profile;
 import Sire.tech.profiles.ProfileDTO;
 import Sire.tech.profiles.ProfileMapper;
@@ -27,6 +29,7 @@ public class AuthentificationService {
     private final ProfileMapper profileMapper;
     private final ActivationsService activationsService;
 
+
     public Profile create(ProfileDTO profileDTO) {
 
         Profile profile = this.profileMapper.dtoToEntity(profileDTO);
@@ -50,5 +53,15 @@ public class AuthentificationService {
         log.info("Le mail de l'utilisateur {} et le code activation est  {}", profile.getEmail(), activation.getUserCode());
 
         return thisprofile;
+    }
+
+    public void validate(Map<String, String> parameters) {
+
+         Profile profile = this.activationsService.validaAndReturnProfile(parameters);
+
+         profile.setActive(true);
+
+         this.profileRepository.save(profile);
+
     }
 }

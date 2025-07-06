@@ -38,16 +38,12 @@ public class Activations {
     private int userCode;
 
     private String code;
-    private  boolean active;
+    private boolean active;
     private LocalDateTime desactivation;
     private LocalDateTime creation;
 
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.DETACH})
     @JoinColumn(name = "profile_id")
     private Profile profile;
-
-
-
-
 
 }
