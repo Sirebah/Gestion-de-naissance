@@ -2,6 +2,7 @@ package Sire.tech.Authentification;
 
 import java.util.Map;
 
+import Sire.tech.notifications.EmailsService;
 import Sire.tech.profiles.Profile;
 import Sire.tech.profiles.ProfileDTO;
 import Sire.tech.profiles.ProfileMapper;
@@ -26,6 +27,7 @@ public class AuthentificationService {
     private final BCryptPasswordEncoder passwordEncoder;
     private final ProfileRepository profileRepository;
     private final RolesRepository rolesRepository;
+    private final EmailsService  emailsService;
     private final ProfileMapper profileMapper;
     private final ActivationsService activationsService;
 
@@ -51,6 +53,17 @@ public class AuthentificationService {
         Activations activation = activationsService.create(thisprofile);
 
         log.info("Le mail de l'utilisateur {} et le code activation est  {}", profile.getEmail(), activation.getUserCode());
+
+        emailsService.send(
+            Map.of(
+                "email", profile.getEmail(),
+                "name", String.format("%s %s", profile.getFirstName(), profile.getLastName()),
+                "code", ""+activation.getUserCode(),
+                "template", "activation-code.ftl"
+            )
+        );
+
+
 
         return thisprofile;
     }
