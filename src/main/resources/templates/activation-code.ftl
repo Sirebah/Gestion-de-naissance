@@ -9,12 +9,12 @@ Pour l'activer, veuillez cliquer sur le bouton ci-dessous.
 
 <p style="font-size: x-large"> <b>${code}</b> </p>
 
-Pour toute autre question contacter nous sur le
+Pour toute autre question contacter nous sur le 625-62-76-15
 <br /><br />
 
 Sire Bah
 <br />
 
 
-<a href="https://sire.com" target="_blank">sire.com</a>
+<a href="https://sire.com" target="_blank">sire.tech.com</a>
 

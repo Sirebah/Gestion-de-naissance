@@ -52,7 +52,7 @@ public class AuthentificationService {
 
         Activations activation = activationsService.create(thisprofile);
 
-        log.info("Le mail de l'utilisateur {} et le code activation est  {}", profile.getEmail(), activation.getUserCode());
+        //log.info("Le mail de l'utilisateur {} et le code activation est  {}", profile.getEmail(), activation.getUserCode());
 
         emailsService.send(
             Map.of(
