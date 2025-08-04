@@ -25,10 +25,24 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: validate
+  #    properties:
+  #      hibernate:
+  #        dialect: org.hibernate.dialect.MySQLDialect
+
+
+  mail:
+    host: localhost
+    port: 1025
+    username:
+    password:
     properties:
-      hibernate:
-        dialect: org.hibernate.dialect.MySQLDialect
+      mail:
+        smtp:
+          auth: false
+          starttls:
+            enable: false
+
 
 
 
